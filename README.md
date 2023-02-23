@@ -3,3 +3,4 @@ A python program that reads every Nth word of an Ao3-download-formatted HTML fil
 
 Usage: `python NthWords.py [-h] [-o OUTPUT] [-mc] NthWords.py file n`
 
+Note: Any text between <>'s will not be counted.
