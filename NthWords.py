@@ -3,6 +3,7 @@ import re
 import sys
 import argparse
 
+# a handy useful writing data function helper thing
 def write_data(oup, loc):
     f = open(loc, 'w', encoding='utf-8')
     f.write(oup)
@@ -14,6 +15,7 @@ def nthWords(path, n, writeTo, multiChapter):
     f = open(path, 'r', encoding='utf8')
     contents = f.read()
     f.close()
+    mc = []
     # Due to Ao3 jank, multiple chapter fics have to be handled in a different way to single chapter ones
     if multiChapter:
         # Cleaning up the string to only include the chapter
@@ -21,14 +23,6 @@ def nthWords(path, n, writeTo, multiChapter):
         mc = mc.rsplit("<!--/chapter content-->", 1)[0]
         mc = mc.strip()
         mc = re.sub("<!--/chapter content-->(.*?)<!--chapter content-->", "", mc, flags=re.DOTALL)
-        mc = re.sub("<(.*?)>", "", mc)
-        mc = re.sub("&#(.+?);", "", mc)
-        # https://github.com/otwcode/otwarchive/blob/master/lib/word_counter.rb
-        mc = re.sub("[--]", "—", mc)
-        mc = re.sub("['’‘-]", "", mc)
-        poggers = re.findall(r'\w+', mc)
-        ous = ' '.join(poggers[::n])
-        write_data(ous,writeTo)
     else:
         # Cleaning up the string to only include the chapter
         mc = contents.split("<div id=\"chapters\" class=\"userstuff\">", 1)[1]
@@ -36,14 +30,19 @@ def nthWords(path, n, writeTo, multiChapter):
         mc = mc.strip()
         mc = re.sub("<h2 class=\"toc-heading\">(.+?)</h2>", "", mc)
 
-        mc = re.sub("<(.*?)>", "", mc)
-        mc = re.sub("&#(.+?);", "", mc)
-        # https://github.com/otwcode/otwarchive/blob/master/lib/word_counter.rb
-        mc = re.sub("[--]", "—", mc)
-        mc = re.sub("['’‘-]", "", mc)
-        poggers = re.findall(r'\w+', mc)
-        ous = ' '.join(poggers[::n])
-        write_data(ous,writeTo)
+    # cleaning up the rest of it
+    
+    mc = re.sub("<(.*?)>", "", mc)
+    mc = re.sub("&#(.+?);", "", mc)
+    # This part is an approximation of the Ao3 word counter, which can be found here
+    # https://github.com/otwcode/otwarchive/blob/master/lib/word_counter.rb 
+    mc = re.sub("[--]", "—", mc)
+    mc = re.sub("['’‘-]", "", mc)
+    # Finding the words
+    poggers = re.findall(r'\w+', mc)
+    # Joining together every nth word
+    ous = ' '.join(poggers[n::n])
+    write_data(ous,writeTo)
 
 # Setting up command line options
 parser = argparse.ArgumentParser()
