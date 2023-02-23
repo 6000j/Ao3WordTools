@@ -8,7 +8,7 @@ def write_data(oup, loc):
     f.write(oup)
     f.close()
     
-def nthWords(path, n):
+def nthWords(path, n, writeTo):
     # Reading in the chapter
     f = open(path, 'r', encoding='utf8')
     contents = f.read()
@@ -26,17 +26,22 @@ def nthWords(path, n):
     result = len(re.findall(r'\w+', mc))
     poggers = re.findall(r'\w+', mc)
     ous = ' '.join(poggers[::n])
-    write_data(ous,'oup.txt')
+    write_data(ous,writeTo)
 
     return result
 
+# Setting up command line options
 parser = argparse.ArgumentParser()
 parser.add_argument('file', type=str, help='The html file to process')
 parser.add_argument('n', type=int, help='How many words between each word in the output. Must be >=1')
+
+parser.add_argument('-o', '--output', type=str, default='oup.txt', required=False, help='The output file to write to')
+parser.add_argument('-mc', '--multichapter', action='store_true', default=True, help='Whether or not the fic is multi-chapter')
+
 args = parser.parse_args()
 if (args.n < 1):
     print("n must be a positive integer")
 else:
-    nthWords(args.file, args.n)
+    nthWords(args.file, args.n, args.output)
 
 
