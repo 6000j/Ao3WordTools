@@ -54,7 +54,7 @@ parser.add_argument('-mc', '--multichapter', action='store_true', default=False,
 
 args = parser.parse_args()
 if (args.n < 1):
-    print("n must be a positive integer")
+    print("n must be a positive integer") 
 else:
     nthWords(args.file, args.n, args.output, args.multichapter)
 
