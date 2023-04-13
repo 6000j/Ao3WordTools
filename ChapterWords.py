@@ -65,7 +65,7 @@ def chWCFormatting(chapterCounts):
     for k in range(len(chapterCounts)):
         currCount = chapterCounts[k]
         total = total + currCount
-        oup = oup + "\nChapter " + str(k) + " has " + str(currCount) + " words. So far there have been a total of " + str(total) + " words."
+        oup = oup + "\nChapter " + str(k+1) + " has " + str(currCount) + " words. So far there have been a total of " + str(total) + " words."
     return oup
 
 # Setting up command line options
