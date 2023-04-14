@@ -7,11 +7,8 @@ A collection of Tools for Ao3 that analyse Ao3-download-formatted HTML files and
 # NthWords
 A python 3.10 program that reads every Nth word of an Ao3-download-formatted HTML file and puts them into an oup.txt. It removes all non-body words, including A/N's, summaries, and other various non-body words.
 
-Usage: `python nthWords.py [-h] [-o OUTPUT] [-mc] file n`
+Usage: `python nthWords.py [-h] [-o OUTPUT] file n`
 
-Make sure to use the `-mc` flag if a fic has multiple chapters.
-
-Note: Any text between <>'s will not be counted.
 
 
 ## Example
@@ -23,12 +20,9 @@ Note: Any text between <>'s will not be counted.
 # ChapterWords
 A python 3.10 program that calculates the word counts of the chapters an Ao3-download-formatted HTML file and puts them into an oup.txt, along with a cumulative total. It removes all non-body words, including A/N's, summaries, and other various non-body words.
 
-Note that `ChapterWords` only works on multi-chapter fics.
-
 Usage: `python chapterWords.py [-h] [-o OUTPUT] file`
 
 
-Note: Any text between <>'s will not be counted.
 
 
 ## Example
